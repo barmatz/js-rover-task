@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<project name="Intelligent Environments Rover Test build" basedir="." default="run">
+	<property file="build.properties"/>
+	<target name="clean">
+		<delete dir="${BIN_DIR}"/>
+	</target>
+	<target name="init" depends="clean">
+		<mkdir dir="${BIN_DIR}"/>
+		<mkdir dir="${BIN_DIR}/js"/>
+		<mkdir dir="${BIN_DIR}/css"/>
+	</target>
+	<target name="build" depends="init">
+		<concat destfile="${BIN_DIR}/js/main.js" fixlastline="yes">
+			<fileset dir="${SRC_DIR}" includes="namespaces.js"/>
+			<fileset dir="${SRC_DIR}" includes="**/*.js" excludes="namespaces.js main.js"/>
+			<fileset dir="${SRC_DIR}" includes="main.js"/>
+		</concat>
+		<concat destfile="${BIN_DIR}/css/main.css" fixlastline="yes">
+			<fileset dir="${SRC_DIR}" includes="**/*.css"/>
+		</concat>
+		<copy todir="${BIN_DIR}">
+			<fileset dir="${SRC_DIR}" includes="**/*.*" excludes="**/*.js **/*.css"/>
+		</copy>
+	</target>
+	<target name="run" depends="build">
+		<!--<exec executable="rundll32.exe">
+			<arg line="url.dll, FileProtocolHandler"/>
+			<arg line="${SERVER_URI}"/>
+		</exec>-->
+	</target>
+</project>
